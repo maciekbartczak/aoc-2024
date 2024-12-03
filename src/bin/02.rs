@@ -5,13 +5,23 @@ type Report = Vec<u32>;
 pub fn part_one(input: &str) -> Option<u32> {
     let reports = parse_input(input);
 
-    Some(reports.iter().filter(|report| is_safe(report, false)).count() as u32)
+    Some(
+        reports
+            .iter()
+            .filter(|report| is_safe(report, false))
+            .count() as u32,
+    )
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
     let reports = parse_input(input);
 
-    Some(reports.iter().filter(|report| is_safe(report, true)).count() as u32)
+    Some(
+        reports
+            .iter()
+            .filter(|report| is_safe(report, true))
+            .count() as u32,
+    )
 }
 
 fn parse_input(input: &str) -> Vec<Report> {
@@ -37,7 +47,7 @@ fn is_safe(report: &Report, try_remove_bad_level: bool) -> bool {
     let expected_order = match report[0].cmp(&report[1]) {
         std::cmp::Ordering::Less => ReportOrder::Ascending,
         std::cmp::Ordering::Greater => ReportOrder::Descending,
-        std::cmp::Ordering::Equal =>  return can_report_be_made_safe(report, try_remove_bad_level)
+        std::cmp::Ordering::Equal => return can_report_be_made_safe(report, try_remove_bad_level),
     };
     let expected_range = 1..=3;
 
@@ -48,8 +58,9 @@ fn is_safe(report: &Report, try_remove_bad_level: bool) -> bool {
         let order = match left_level.cmp(&right_level) {
             std::cmp::Ordering::Less => ReportOrder::Ascending,
             std::cmp::Ordering::Greater => ReportOrder::Descending,
-            std::cmp::Ordering::Equal => return can_report_be_made_safe(report, try_remove_bad_level)
-
+            std::cmp::Ordering::Equal => {
+                return can_report_be_made_safe(report, try_remove_bad_level)
+            }
         };
         if order != expected_order {
             return can_report_be_made_safe(report, try_remove_bad_level);
