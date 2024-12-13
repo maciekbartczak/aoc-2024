@@ -96,6 +96,14 @@ impl Grid {
         None
     }
 
+    pub fn iter(&self) -> GridIter {
+        GridIter {
+            grid: self,
+            current_x: 0,
+            current_y: 0,
+        }
+    }
+
     pub fn height(&self) -> usize {
         self.height
     }
@@ -116,6 +124,35 @@ impl Grid {
     }
 }
 
+pub struct GridIter<'a> {
+    grid: &'a Grid,
+    current_x: usize,
+    current_y: usize,
+}
+
+impl Iterator for GridIter<'_> {
+    type Item = (Vec2, char);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.current_y >= self.grid.height {
+            return None;
+        }
+        let pos = Vec2 {
+            x: self.current_x as i32,
+            y: self.current_y as i32,
+        };
+        let value = self.grid.char_at(&pos);
+
+        self.current_x += 1;
+        if self.current_x >= self.grid.width {
+            self.current_x = 0;
+            self.current_y += 1;
+        }
+
+        Some((pos, value))
+    }
+}
+
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct Vec2 {
     x: i32,
@@ -126,10 +163,18 @@ impl Vec2 {
     pub fn new(x: i32, y: i32) -> Self {
         Self { x, y }
     }
+
     pub fn add(&self, other: &Vec2) -> Self {
         Self {
             x: self.x + other.x,
             y: self.y + other.y,
+        }
+    }
+
+    pub fn sub(&self, other: &Vec2) -> Self {
+        Self {
+            x: self.x - other.x,
+            y: self.y - other.y,
         }
     }
 }
