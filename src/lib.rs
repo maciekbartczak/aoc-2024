@@ -43,7 +43,23 @@ impl Grid {
         None
     }
 
-    pub fn point_is_in_gird(&self, point: &Vec2) -> bool {
+    pub fn find_char_positions(&self, needle: char) -> Vec<Vec2> {
+        let mut positions = vec![];
+        for y in 0..self.height {
+            for x in 0..self.width {
+                if self.buffer[y][x] == needle {
+                    positions.push(Vec2 {
+                        x: x as i32,
+                        y: y as i32,
+                    });
+                }
+            }
+        }
+
+        positions
+    }
+
+    pub fn is_point_in_gird(&self, point: &Vec2) -> bool {
         point.y >= 0 && point.y < self.height as i32 && point.x >= 0 && point.x < self.width as i32
     }
 
@@ -58,7 +74,7 @@ impl Grid {
         let mut current_position = start_from.add(&offset);
         let mut chars = vec![];
         for _ in 0..count {
-            if self.point_is_in_gird(&current_position) {
+            if self.is_point_in_gird(&current_position) {
                 chars.push(self.buffer[current_position.y as usize][current_position.x as usize])
             }
 
@@ -74,7 +90,7 @@ impl Grid {
             x: width as i32 - 1,
             y: height as i32 - 1,
         });
-        if self.point_is_in_gird(&lower_right_point) {
+        if self.is_point_in_gird(&lower_right_point) {
             let mut subgrid = vec![];
             for y in start_from.y..=lower_right_point.y {
                 subgrid.push(vec![]);

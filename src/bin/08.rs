@@ -40,7 +40,7 @@ fn get_antinodes(satellite: &Vec2, other_satellites: Vec<&Vec2>, grid: &Grid) ->
             let distance = satellite.sub(&other);
             let antinode = satellite.add(&distance);
 
-            if grid.point_is_in_gird(&antinode) {
+            if grid.is_point_in_gird(&antinode) {
                 Some(antinode)
             } else {
                 None
@@ -61,7 +61,7 @@ fn get_antinodes_with_resonant_harmonics(
             let distance = satellite.sub(&other);
 
             let mut antinode = satellite.add(&distance);
-            while grid.point_is_in_gird(&antinode) {
+            while grid.is_point_in_gird(&antinode) {
                 antinodes.insert(antinode);
                 antinode = antinode.add(&distance);
             }

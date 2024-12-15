@@ -97,7 +97,7 @@ impl Guard {
 
     fn get_next_position(&self, grid: &Grid) -> Option<Vec2> {
         let new_position = self.position.add(&self.direction.get_offset());
-        if grid.point_is_in_gird(&new_position) {
+        if grid.is_point_in_gird(&new_position) {
             Some(new_position)
         } else {
             None
