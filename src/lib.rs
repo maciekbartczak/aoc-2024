@@ -84,6 +84,20 @@ impl Grid {
         chars
     }
 
+    pub fn get_cell_in_direction(
+        &self,
+        start_from: &Vec2,
+        direction: &Direction,
+    ) -> Option<(Vec2, char)> {
+        let chars = self.get_chars_in_direction(start_from, direction, 1);
+
+        if chars.len() == 1 {
+            return Some((start_from.add(&direction.get_offset()), chars[0]));
+        }
+
+        None
+    }
+
     pub fn make_subgrid(&self, start_from: &Vec2, width: usize, height: usize) -> Option<Grid> {
         // one needs to be subtracted because we want the start_from point to be included in the subgrid
         let lower_right_point = start_from.add(&Vec2 {
