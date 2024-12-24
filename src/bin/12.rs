@@ -1,5 +1,5 @@
-use std::{collections::HashSet, vec};
 use advent_of_code::{Direction, Grid, Vec2};
+use std::{collections::HashSet, vec};
 
 advent_of_code::solution!(12);
 
@@ -48,20 +48,32 @@ impl Region {
 
         for (possible_side_starting_fence_pos, fence_direction) in fences.clone() {
             let offset_x = Vec2::new(1, 0);
-            let mut expected_next_fence = (possible_side_starting_fence_pos.add(&offset_x), fence_direction.clone());
+            let mut expected_next_fence = (
+                possible_side_starting_fence_pos.add(&offset_x),
+                fence_direction.clone(),
+            );
 
             while fences.contains(&expected_next_fence) {
-                let index = fences.iter().position(|p| *p == expected_next_fence).unwrap();
+                let index = fences
+                    .iter()
+                    .position(|p| *p == expected_next_fence)
+                    .unwrap();
                 fences.remove(index);
 
                 expected_next_fence.0 = expected_next_fence.0.add(&offset_x);
             }
 
             let offset_y = Vec2::new(0, 1);
-            let mut expected_next_fence = (possible_side_starting_fence_pos.add(&offset_y), fence_direction.clone());
+            let mut expected_next_fence = (
+                possible_side_starting_fence_pos.add(&offset_y),
+                fence_direction.clone(),
+            );
 
             while fences.contains(&expected_next_fence) {
-                let index = fences.iter().position(|p| *p == expected_next_fence).unwrap();
+                let index = fences
+                    .iter()
+                    .position(|p| *p == expected_next_fence)
+                    .unwrap();
                 fences.remove(index);
 
                 expected_next_fence.0 = expected_next_fence.0.add(&offset_y);
