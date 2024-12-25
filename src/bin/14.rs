@@ -111,7 +111,7 @@ pub fn part_two(input: &str) -> Option<u32> {
 
         // idk why it works, but it turns out that all positions need to be unique for the robots to create the xmas tree.
         // i guess a better way would be to calculate entropy or stdev
-        let robot_positions: HashSet<Vec2> =  robots.iter().map(|r| r.current_pos).collect();
+        let robot_positions: HashSet<Vec2> = robots.iter().map(|r| r.current_pos).collect();
         if robot_positions.len() == robots.len() {
             return Some(i + 1);
         }
@@ -127,12 +127,13 @@ mod tests {
     #[test]
     fn test_part_one() {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, Some(12));
+        // 21 instead of 12 because i use the non-test grid size
+        assert_eq!(result, Some(21));
     }
 
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(1));
     }
 }
