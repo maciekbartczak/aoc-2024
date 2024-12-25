@@ -207,6 +207,21 @@ impl Vec2 {
             y: self.y - other.y,
         }
     }
+
+    pub fn mul(&self, other: &Vec2) -> Self {
+        Self {
+            x: self.x * other.x,
+            y: self.y * other.y,
+        }
+    }
+
+    pub fn gte(&self, other: &Vec2) -> bool {
+        self.x >= other.x && self.y >= other.y
+    }
+
+    pub fn lt(&self, other: &Vec2) -> bool {
+        self.x < other.x && self.y < other.y
+    }
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
