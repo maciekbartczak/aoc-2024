@@ -20,6 +20,20 @@ impl Grid {
         }
     }
 
+    pub fn new(width: usize, height: usize) -> Self {
+        let mut buffer: Vec<Vec<char>> = Vec::new();
+        for _ in 0..height {
+            let row = vec![' '; width];
+            buffer.push(row);
+        }
+
+        Self {
+            width,
+            height,
+            buffer,
+        }
+    }
+
     pub fn char_at(&self, position: &Vec2) -> char {
         self.buffer[position.y as usize][position.x as usize]
     }
@@ -152,6 +166,14 @@ impl Grid {
 
         println!();
     }
+
+    pub fn swap_cells(&mut self, a: &Vec2, b: &Vec2) {
+        let c_a = self.char_at(a);
+        let c_b = self.char_at(b);
+
+        self.replace_char_at(a, c_b);
+        self.replace_char_at(b, c_a);
+    }
 }
 
 pub struct GridIter<'a> {
@@ -221,6 +243,13 @@ impl Vec2 {
 
     pub fn lt(&self, other: &Vec2) -> bool {
         self.x < other.x && self.y < other.y
+    }
+
+    pub fn div(&self, other: &Vec2) -> Self {
+        Self {
+            x: self.x / other.x,
+            y: self.y / other.y,
+        }
     }
 }
 
